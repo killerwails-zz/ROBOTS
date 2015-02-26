@@ -59,20 +59,14 @@ header {
   margin-top:10px;
   margin-right:25px;
 }
-.img-circle:nth-child(2){
-border:8px solid rgba(118, 115, 113, 0.96);
-}
+
 
 .img-circle img {
     width:85px;
     height:85px;
 
 }
-.img-circle:nth-child(2) img, 
-.img-circle:nth-child(3) img,
-.img-circle:nth-child(4) img{
--webkit-filter: brightness(0.1) contrast(0.1) grayscale(0.2) hue-rotate(317deg)
-}
+
 .tab-1 {
   height:300px;
   width:300px;
