@@ -9,8 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.12.0",
     "node-twitter-api": "^1.5.0",
     "opencv": "*",
-    "express":""
+    "socket.io": "^1.3.4"
   }
 }
