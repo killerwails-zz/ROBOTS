@@ -1,0 +1,91 @@
+html, body {
+  margin:0;
+  background-color:#f8f8f8;
+}
+
+body {
+  font: 100px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+footer {
+  /*green background*/
+  background-color:rgba(16, 210, 177, 0.89);
+
+/* grey background */
+/*  background-color:rgba(199, 195, 195, 0.64);*/
+  height: 130px;
+  width:100%;
+  margin:0px;
+  position:absolute;
+  bottom:0;
+  padding: 0px 20px 20px 0;
+  text-align:center;
+}
+
+p{
+  vertical-align: top;
+  position:relative;
+  bottom:13px;
+  left:25px;
+  font-family: optima;
+  font-weight: bold;
+  color:rgb(208, 237, 225);
+}
+
+header {
+  background-color:rgba(16, 210, 177, 0.89);
+  width:100%;
+  height: 50px;
+  font-size:25px; 
+  position:absolute;
+  top:0; 
+  margin-bottom:50px;
+}
+
+.img-circle {
+  height:100px;
+  width:100px;
+  border-radius:50%;
+  transform: translateY(-50%);
+  position:relative;
+  top:50%;
+  border:8px solid rgba(255, 255, 255, 0.8);
+  display:inline-block;
+  text-align:center;
+  margin-top:10px;
+  margin-right:25px;
+}
+
+
+.img-circle img {
+    width:85px;
+    height:85px;
+
+}
+
+.tab-1 {
+  height:300px;
+  width:300px;
+  background-color:white;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  display: inline-block;
+  margin:50px;
+  margin-top:80px;
+}
+
+.img-circle.current {
+/*  yellow and yellow tint*/
+  border: 8px solid rgba(253, 255, 194, 1);
+  background-color:rgba(253, 255, 194, 0.5);
+
+/*  border:8px solid rgba(237, 131, 175, 0.81);
+  background-color:rgba(255, 194, 238, 0.56);*/
+}
+
+
+
+
