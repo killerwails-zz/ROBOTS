@@ -1,51 +1,56 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
+<html>
 
-<html> 
-<header>
-<p> Gesture</p>
-<link href="./stylesheets/style.css" type="text/css" rel="
-stylesheet" />
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;signed_in=true"></script>
-     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+ <header>
 
+    <p> Gesture </p>
+    <link href="./stylesheets/style.css" type="text/css" rel="
+  stylesheet" />
+    <link href="http://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;signed_in=true"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io('http://localhost:3000');
+      socket.on('live-stream', function (data) {
+      console.log(data);
+      // socket.emit('my other event', { my: 'data' });
+      });
+    </script>
 
-
-<link href="http://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
-</header>
-
-
-
-
-
+  </header>
+  
 <body>
 
-<div class="tab-1">
-</div>
-<div class="tab-1">
-</div>
+  <div class="tab-1">
+  </div>
+  <div class="tab-1">
+  </div>
+
 </body>
 
 <footer> 
 
-<div class='img-circle current'>
-<img src="./images/thumbs_down.png"/>
-</div>
-<div class='img-circle'>
-<img src="./images/thumbs_up.png"/>
-</div>
-<div class='img-circle'>
-<img src="./images/picturesign.png"/>
-</div>
-<div class='img-circle'>
-<img src="./images/thumbs_up.png"/>
-</div>
+  <div class='img-circle current'>
+    <img src="./images/thumbs_down.png"/>
+  </div>
+  <div class='img-circle'>
+    <img src="./images/thumbs_up.png"/>
+  </div>
+  <div class='img-circle'>
+    <img src="./images/picturesign.png"/>
+  </div>
+  <div class='img-circle'>
+    <img src="./images/thumbs_up.png"/>
+  </div>
+
 </footer>
 
-<script>
-$($('.img-circle').on('click', function(){
-  $(this).toggleClass('current')
-})
-);
-</script> 
+  <script>
+  $('.img-circle').on('click', function(){
+    $(this).toggleClass('current')
+     });
+  </script>
+   
 </html>
