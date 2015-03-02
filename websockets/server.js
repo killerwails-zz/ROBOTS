@@ -1,6 +1,7 @@
 // using express to handle routing
 var express = require('express');
 var app = express();
+var imageFile = './stream/image_stream.jpg'
 
 // http server for loading html pages
 var http = require('http').Server(app);
@@ -36,14 +37,23 @@ io.on('connection', function(socket) {
     if (Object.keys(sockets).length == 0) {
       app.set('watchingFile', false);
       if (proc) proc.kill();
-      fs.unwatchFile('./stream/image_stream.jpg');
+      fs.unwatchFile(imageFile);
     }
   });
  
   socket.on('start-stream', function() {
     startStreaming(io);
   });
- 
+  socket.on('take-picture',function() {
+    fs.open(imageFile, 'r', function(err,reader){
+      fs.open("./stream/image_capture.jpg",'w+',function(err,writer){
+        console.log(err)
+        fs.write(writer, reader.toBuffer, function(err,fd){
+          console.log('matt: ', err)
+        });
+      });
+    });
+  });
 });
  //start server
 http.listen(3000, function() {
@@ -54,26 +64,26 @@ function stopStreaming() {
   if (Object.keys(sockets).length == 0) {
     app.set('watchingFile', false);
     if (proc) proc.kill();
-    fs.unwatchFile('./stream/image_stream.jpg');
+    fs.unwatchFile(imageFile);
   }
 }
  //if capturing not started, start a new child process and then spawn it.Registers a watch on the changing file. Whenever the file changes we emit a URL to all connected clients.
 function startStreaming(io) {
  //_t param to aviod caching on the image
   if (app.get('watchingFile')) {
-    io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
+    io.sockets.emit('live-stream', 'image_stream.jpg?_t=' + (Date.now()));
     return;
   }
  
-  var args = ["-w", "640", "-h", "480", "-o", "./stream/image_stream.jpg", "-t", "999999999", "-tl", "100"];
+  var args = ["-w", "640", "-h", "480", "-o", imageFile, "-t", "999999999", "-tl", "100"];
   proc = spawn('raspistill', args);
  
   console.log('Watching for changes...');
  
   app.set('watchingFile', true);
  
-  fs.watchFile('./stream/image_stream.jpg', function(current, previous) {
-    io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
+  fs.watchFile(imageFile, function(current, previous) {
+    io.sockets.emit('live-stream', 'image_stream.jpg?_t=' + (Date.now()));
   })
  
 }
