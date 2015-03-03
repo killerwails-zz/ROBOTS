@@ -14,8 +14,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes = require(__dirname + '/../routes/index');
 // http server for loading html pages
 var http = require('http').Server(app);
 // socket.io for handling websockets
@@ -41,19 +40,19 @@ accessToken/accessTokenSecret: provided by Twitter API
 callback -  
         on error: responds back with error message  
       on success: responds back with success message*/ 
-client.statuses("update_with_media", {
-         media: ['./images/google.png'],
-        status: "my picture stream"
-    },
-    process.env.TWITTER_ACCESS_TOKEN_KEY,
-    process.env.TWITTER_ACCESS_TOKEN_SECRET,
-    function(err, data, response) {
-        if (err) {
-          console.log('error in status update', err);
-        } else {
-          console.log('Your status has been updated!', response);
-        }
-});
+// client.statuses("update_with_media", {
+//          media: ['./images/google.png'],
+//         status: "my picture stream"
+//     },
+//     process.env.TWITTER_ACCESS_TOKEN_KEY,
+//     process.env.TWITTER_ACCESS_TOKEN_SECRET,
+//     function(err, data, response) {
+//         if (err) {
+//           console.log('error in status update', err);
+//         } else {
+//           console.log('Your status has been updated!', response);
+//         }
+// });
 // view engine setup
 //set to run on port 3000
 app.set('port', process.env.PORT || 3000);
@@ -66,13 +65,13 @@ app.set('view engine', 'html');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+// app.use('/', routes);
 
 // make stream folder act like static folder
-app.use('/', express.static(path.join(__dirname, 'stream')));
+// app.use('/', express.
+  // static(path.join(__dirname, 'stream')));
 // default route for index
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/index.html');
@@ -96,33 +95,11 @@ io.on('connection', function(socket) {
       fs.unwatchFile(imageFile);
     }
   });
-// error handlers
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(logger('dev'));
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
   socket.on('start-stream', function() {
     startStreaming(io);
   });
+
   socket.on('take-picture',function() {
     fs.open(imageFile, 'r', function(err,reader){
       fs.open("./stream/image_capture.jpg",'w+',function(err,writer){
@@ -135,13 +112,9 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.listen(3000);
+app.listen(app.get('port'));
 module.exports = app;
 
- //start server
-http.listen(3000, function() {
-  console.log('listening on *:3000');
-});
 //if capturing already happening,will not re-init.Emits the last saved image
 function stopStreaming() {
   if (Object.keys(sockets).length == 0) {
