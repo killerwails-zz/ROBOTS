@@ -1,0 +1,6 @@
+$($('.img-circle').on('click', function(){
+    $(this).toggleClass('current')
+  });
+)
+
+  

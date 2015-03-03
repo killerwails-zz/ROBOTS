@@ -10,7 +10,10 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;signed_in=true"></script>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+    <!-- socket.io js file --> 
+    <!--<script src="/socket.io/socket.io.js"></script> -->
+    <script src="./javascripts/animations.js" />
+    
     <script>
       var socket = io('http://localhost:3000');
       socket.on('live-stream', function (data) {
@@ -46,11 +49,5 @@
   </div>
 
 </footer>
-
-  <script>
-  $('.img-circle').on('click', function(){
-    $(this).toggleClass('current')
-     });
-  </script>
    
 </html>
