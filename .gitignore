@@ -2,7 +2,6 @@
 
 node_camera
 node_modules
-*.png
 examples/*.avi
 examples/tmp/*
 .DS_Store
