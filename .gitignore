@@ -2,7 +2,6 @@
 
 node_camera
 node_modules
-*.jpg
 *.png
 examples/*.avi
 examples/tmp/*
