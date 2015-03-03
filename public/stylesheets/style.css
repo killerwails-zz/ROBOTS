@@ -1,3 +1,5 @@
+/* light aqua color variable */
+/*Image logo attributes */
 html {
   margin: 0;
   background-color: #f8f8f8; }
@@ -13,8 +15,6 @@ a {
 footer {
   /*green background */
   background-color: rgba(16, 210, 177, 0.89);
-  /* grey background */
-  /*  background-color:rgba(199, 195, 195, 0.64); */
   height: 130px;
   width: 100%;
   margin: 0px;
@@ -67,10 +67,8 @@ header {
   margin-top: 80px; }
 
 .img-circle.current {
-  /*  yellow and yellow tint */
+  /* yellow and yellow tint */
   border: 8px solid #fdffc2;
-  background-color: rgba(253, 255, 194, 0.5);
-  /*  border:8px solid rgba(237, 131, 175, 0.81);
-   *background-color:rgba(255, 194, 238, 0.56); */ }
+  background-color: rgba(253, 255, 194, 0.5); }
 
 /*# sourceMappingURL=style.css.map */
