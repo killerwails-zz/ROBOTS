@@ -1,6 +1,5 @@
 
 
-node_camera
 node_modules
 examples/*.avi
 examples/tmp/*
