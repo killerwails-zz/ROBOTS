@@ -2,7 +2,7 @@
 var express = require('express');
 var app = express();
 var twitterAPI = require('node-twitter-api');
-var imageFile = './stream/image_stream.jpg'
+var imageFile = './views/image_stream.jpg'
 // creating a new instance of client using BOT's twitter account  
 //Inputs: 
 var client = new twitterAPI({
@@ -102,7 +102,7 @@ io.on('connection', function(socket) {
 
   socket.on('take-picture',function() {
     fs.open(imageFile, 'r', function(err,reader){
-      fs.open("./stream/image_capture.jpg",'w+',function(err,writer){
+      fs.open("./views/image_capture.jpg",'w+',function(err,writer){
         console.log(err)
         fs.write(writer, reader.toBuffer, function(err,fd){
           console.log('matt: ', err)
