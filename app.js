@@ -6,13 +6,12 @@ var path = require('path');
 var fs = require('fs');
 var spawn = require('child_process').spawn;
 var twitter = require('./lib/twitter-api.js')
-twitter.PostWithMedia();
 
 var IMAGE_FILE_PATH = './views/image_stream.jpg'
   
 var app = express();
 var server = require('http').Server(app);
-var io = require('socket.io')(http)
+// var io = require('socket.io')(http)
 
 app.set('port', process.env.PORT || 3000);
 
@@ -26,37 +25,37 @@ app.use(express.static(path.join(__dirname,'bower_components')));
 var sockets = {};
 var proc;
 
-io.on('connection', function(socket) {
-  sockets[socket.id] = socket;
-  console.log(socket.id, "connected");
+// io.on('connection', function(socket) {
+//   sockets[socket.id] = socket;
+//   console.log(socket.id, "connected");
 
-  socket.on('disconnect', function() {
-    // remove this socket object from current on-line list
-    console.log("disconnected", socket.id);
-    delete sockets[socket.id];
-    //no more sockets, death to the stream!(power saving)
-    if (Object.keys(sockets).length == 0) {
-      app.set('watchingFile', false);
-      if (proc) proc.kill();
-      fs.unwatchFile(IMAGE_FILE_PATH);
-    }
-  });
+//   socket.on('disconnect', function() {
+//     // remove this socket object from current on-line list
+//     console.log("disconnected", socket.id);
+//     delete sockets[socket.id];
+//     //no more sockets, death to the stream!(power saving)
+//     if (Object.keys(sockets).length == 0) {
+//       app.set('watchingFile', false);
+//       if (proc) proc.kill();
+//       fs.unwatchFile(IMAGE_FILE_PATH);
+//     }
+//   });
 
-  socket.on('start-stream', function() {
-    startStreaming(io);
-  });
+//   socket.on('start-stream', function() {
+//     startStreaming(io);
+//   });
 
-  socket.on('take-picture',function() {
-    fs.open(IMAGE_FILE_PATH, 'r', function(err,reader){
-      fs.open("./views/image_capture.jpg",'w+',function(err,writer){
-        console.log(err)
-        fs.write(writer, reader.toBuffer, function(err,fd){
-          console.log('matt: ', err)
-        });
-      });
-    });
-  });
-});
+//   socket.on('take-picture',function() {
+//     fs.open(IMAGE_FILE_PATH, 'r', function(err,reader){
+//       fs.open("./views/image_capture.jpg",'w+',function(err,writer){
+//         console.log(err)
+//         fs.write(writer, reader.toBuffer, function(err,fd){
+//           console.log('matt: ', err)
+//         });
+//       });
+//     });
+//   });
+// });
 
 //if capturing already happening,will not re-init.Emits the last saved image
 function stopStreaming() {
