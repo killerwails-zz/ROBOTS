@@ -1,11 +1,12 @@
   // using express to handle routing
 var express = require('express');
-var twitterAPI = require('node-twitter-api');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var path = require('path');
 var fs = require('fs');
 var spawn = require('child_process').spawn;
+var twitter = require('./lib/twitter-api.js')
+twitter.PostWithMedia();
 
 var IMAGE_FILE_PATH = './views/image_stream.jpg'
   
@@ -86,21 +87,3 @@ function startStreaming(io) {
  
 }
   
-var client = new twitterAPI({
-  consumerKey: process.env.TWITTER_CONSUMER_KEY,
-  consumerSecret: process.env.TWITTER_CONSUMER_SECRET
-});
-
-client.statuses("update_with_media", {
-         media: ['./images/google.png'],
-        status: "my picture stream"
-    },
-    process.env.TWITTER_ACCESS_TOKEN_KEY,
-    process.env.TWITTER_ACCESS_TOKEN_SECRET,
-    function(err, data, response) {
-        if (err) {
-          console.log('error in status update', err);
-        } else {
-          console.log('Your status has been updated!', response);
-        }
-});
