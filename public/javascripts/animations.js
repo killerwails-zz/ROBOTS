@@ -44,8 +44,8 @@ $(function(){
       }, counter += 1000)
     }
 
-    $('h1').show();
     $('#greeting').hide();
+    $('h1').show();
     $('.panel-logo').eq(1).addClass('active')
     
     for(var i=5; i>=0; i--){
@@ -61,6 +61,8 @@ $(function(){
       $('.panel-logo').eq(1).hide();
       $('.panel-logo').eq(0).addClass('show');
       $('.panel-logo').eq(2).addClass('show');
+      $('#greeting').show();
+      $('#greeting').text("Like or Dislike");
     }, 6500)
 
   });
@@ -77,6 +79,7 @@ $(function(){
       }, counter += 1000)
     }
 
+    $('#greeting').hide();
     $('h1').show();
     $('.panel-logo').eq(0).addClass('active')
     
@@ -96,12 +99,15 @@ $(function(){
       $('.panel-logo').eq(1).removeClass('show');
       $('.panel-logo').eq(0).addClass('show');
       $('.panel-logo').eq(2).addClass('show');
+      $('#greeting').show();
+      $('#greeting').text("Like or Dislike");
     }, 6500)
 
   });
 
 
   $('#thumbs-up').on('click', function(){
+    $('#greeting').hide();
     $('.panel-logo').eq(2).addClass('active');
     $('#twitter-pop-up').delay(100).show(1000).delay(2500).fadeOut();
     setTimeout(function(){
@@ -111,6 +117,7 @@ $(function(){
       });
       $('.panel-logo').eq(1).addClass('show');
       $('.panel-logo').eq(1).show();
+      $('#greeting').text("Strike a pose");
       $('#greeting').show('slow');
     },3650);
   });

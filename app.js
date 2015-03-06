@@ -1,35 +1,55 @@
   // using express to handle routing
 var express = require('express');
-var twitterAPI = require('node-twitter-api');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var path = require('path');
 var fs = require('fs');
 var spawn = require('child_process').spawn;
+var twitter = require('./lib/twitter-api.js');
 
-var IMAGE_FILE_PATH = './views/image_stream.jpg'
-  
+var IMAGE_FILE_PATH = './camera_images/image_stream.jpg'
+
 var app = express();
 var server = require('http').Server(app);
-var io = require('socket.io')(http)
 
 app.set('port', process.env.PORT || 3000);
+var io = require('socket.io')(server);
+
+server.listen(app.get('port'));
+
+
+console.log('listening on', app.get('port'))
+
 
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname,'public')));
-app.use(express.static(path.join(__dirname,'stream')));
 app.use(express.static(path.join(__dirname,'bower_components')));
  
+
 var sockets = {};
 var proc;
+
+
 
 io.on('connection', function(socket) {
   sockets[socket.id] = socket;
   console.log(socket.id, "connected");
+  
+  //post to twitter function
+  socket.on('post-to-twitter', function(err){
+     /*twitter.PostWithMedia method 
+       input of the function takes in  two variables: 
+         1. path to the image file 
+         2. message to post to twitter 
+       output:
+         error or success message 
+     */
+     twitter.PostWithMedia(IMAGE_FILE_PATH, 'BYTEME app posted @ ' + Date());
+  });
 
-  socket.on('disconnect', function() {
+  io.on('disconnect', function() {
     // remove this socket object from current on-line list
     console.log("disconnected", socket.id);
     delete sockets[socket.id];
@@ -41,13 +61,14 @@ io.on('connection', function(socket) {
     }
   });
 
-  socket.on('start-stream', function() {
+  io.on('start-stream', function() {
+    console.log('sexy-time')
     startStreaming(io);
   });
 
-  socket.on('take-picture',function() {
+  io.on('take-picture',function() {
     fs.open(IMAGE_FILE_PATH, 'r', function(err,reader){
-      fs.open("./views/image_capture.jpg",'w+',function(err,writer){
+      fs.open("./camera_images/image_capture.jpg",'w+',function(err,writer){
         console.log(err)
         fs.write(writer, reader.toBuffer, function(err,fd){
           console.log('matt: ', err)
@@ -55,7 +76,10 @@ io.on('connection', function(socket) {
       });
     });
   });
+
 });
+
+
 
 //if capturing already happening,will not re-init.Emits the last saved image
 function stopStreaming() {
@@ -72,7 +96,7 @@ function startStreaming(io) {
     io.sockets.emit('live-stream', 'image_stream.jpg?_t=' + (Date.now()));
     return;
   }
- 
+
   var args = ["-w", "640", "-h", "480", "-o", IMAGE_FILE_PATH, "-t", "999999999", "-tl", "100"];
   proc = spawn('raspistill', args);
  
@@ -83,24 +107,5 @@ function startStreaming(io) {
   fs.watchFile(IMAGE_FILE_PATH, function(current, previous) {
     io.sockets.emit('live-stream', 'image_stream.jpg?_t=' + (Date.now()));
   })
- 
-}
-  
-var client = new twitterAPI({
-  consumerKey: process.env.TWITTER_CONSUMER_KEY,
-  consumerSecret: process.env.TWITTER_CONSUMER_SECRET
-});
+};
 
-client.statuses("update_with_media", {
-         media: ['./images/google.png'],
-        status: "my picture stream"
-    },
-    process.env.TWITTER_ACCESS_TOKEN_KEY,
-    process.env.TWITTER_ACCESS_TOKEN_SECRET,
-    function(err, data, response) {
-        if (err) {
-          console.log('error in status update', err);
-        } else {
-          console.log('Your status has been updated!', response);
-        }
-});

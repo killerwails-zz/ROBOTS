@@ -4,4 +4,4 @@ node_modules
 examples/*.avi
 examples/tmp/*
 .DS_Store
-
+twittersetup.sh
