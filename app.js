@@ -6,32 +6,27 @@ var path = require('path');
 var fs = require('fs');
 var spawn = require('child_process').spawn;
 var twitter = require('./lib/twitter-api.js');
-var io = require('socket.io').listen(3001);
 
-var IMAGE_FILE_PATH = './views/image_stream.jpg'
+var IMAGE_FILE_PATH = './public/image_stream.jpg'
   
 var app = express();
 var server = require('http').Server(app);
 
 app.set('port', process.env.PORT || 3000);
+var io = require('socket.io')(server);
+server.listen(app.get('port'));
+console.log('listening on', app.get('port'))
+
 
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname,'public')));
-app.use(express.static(path.join(__dirname,'stream')));
 app.use(express.static(path.join(__dirname,'bower_components')));
-app.listen(app.get('port'));
  
-app.listen(app.get('port'));
 
 var sockets = {};
 var proc;
-
-
-io.on('live-stream', function (data) {
-  console.log(data);
-});
 
 io.on('connection', function(socket) {
   sockets[socket.id] = socket;
@@ -50,12 +45,13 @@ io.on('connection', function(socket) {
   });
 
   io.on('start-stream', function() {
+    console.log('sexy-time')
     startStreaming(io);
   });
 
   io.on('take-picture',function() {
     fs.open(IMAGE_FILE_PATH, 'r', function(err,reader){
-      fs.open("./views/image_capture.jpg",'w+',function(err,writer){
+      fs.open("./public/image_capture.jpg",'w+',function(err,writer){
         console.log(err)
         fs.write(writer, reader.toBuffer, function(err,fd){
           console.log('matt: ', err)
@@ -92,7 +88,4 @@ function startStreaming(io) {
     io.sockets.emit('live-stream', 'image_stream.jpg?_t=' + (Date.now()));
   })
 };
-
-
- 
 
