@@ -10,32 +10,39 @@
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
     <script src="/socket.io/socket.io.js"></script> 
-    <script src="./javascripts/animations.js"></script>
+    <script src="/javascripts/animations.js"></script>
     <script type="text/javascript"></script>
     <script src="bower_components/tracking/build/tracking-min.js"> </script>
     <script src="/javascripts/byteme.js"></script>
     <script>
       var IMAGE_ELEMENT 
-      var socket = io('http://localhost:3000');
+      var socket = io();
       socket.on('live-stream', function (data) {
       console.log(data);
       IMAGE_ELEMENT.attr('src',data)
       });
       $(function (){
         IMAGE_ELEMENT = $('#matt');
-console.log('hello')
+        console.log('hello')
         $("#status").on('click', function(e){
-console.log('hello')
+        console.log('hello')
           e.preventDefault();
           console.log(socket.emit('start-stream'));
         });
+        $('#thumbs-up').click(function(){
+          console.log('thumbs up clicked');
+          socket.emit('post-to-twitter');
+        })
       });
+
     </script>
 
   </head>
 
 <body>
-    
+  <header>
+    <p id="title">Byte-me </p>
+  </header>
   <!-- this is for the counter-->
   <h1> </h1>
   <div id="instruction-background"></div>
@@ -52,8 +59,6 @@ console.log('hello')
   <p id='instruction-counter'></p>
   
   </div>
-  <img id="matt" src=""/>
-  <canvas id="canvas"></canvas>
   <!-- background text-->
   <p id="greeting">Awaiting gestures...</p>
   <div id="twitter-pop-up">
@@ -64,17 +69,18 @@ console.log('hello')
   </div>
   <div id="status-box"></div>
   <div id="status"></div>
-
+  <img id="matt" src=""/>
+    <canvas id="canvas"></canvas>
   <footer> 
 
     <div class='panel-logo'>
-      <img src="./images/thumbs_down.png"/>
+      <img id="thumbs-down" src="./images/thumbs_down.png"/>
     </div>
     <div class='panel-logo'>
-      <img src="./images/picturesign.png"/>
+      <img id="picture-gesture" src="./images/picturesign.png"/>
     </div>
     <div class='panel-logo'>
-      <img src="./images/thumbs_up.png"/>
+      <img id="thumbs-up" src="./images/thumbs_up.png"/>
     </div>
 
   </footer>
