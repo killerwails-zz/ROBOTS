@@ -14,7 +14,10 @@ var server = require('http').Server(app);
 
 app.set('port', process.env.PORT || 3000);
 var io = require('socket.io')(server);
+
 server.listen(app.get('port'));
+
+
 console.log('listening on', app.get('port'))
 
 var sockets = {};
@@ -27,9 +30,23 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(express.static(path.join(__dirname,'camera_images')));
 app.use(express.static(path.join(__dirname,'bower_components')));
 
+
+
 io.on('connection', function(socket) {
   sockets[socket.id] = socket;
   console.log(socket.id, "connected");
+  
+  //post to twitter function
+  socket.on('post-to-twitter', function(err){
+     /*twitter.PostWithMedia method 
+       input of the function takes in  two variables: 
+         1. path to the image file 
+         2. message to post to twitter 
+       output:
+         error or success message 
+     */
+     twitter.PostWithMedia(IMAGE_FILE_PATH, 'BYTEME app posted @ ' + Date());
+  });
 
   io.on('disconnect', function() {
     // remove this socket object from current on-line list
@@ -47,8 +64,6 @@ io.on('connection', function(socket) {
     console.log('sexy-time')
     startStreaming(io);
   });
-
-});
 
 //if capturing already happening,will not re-init.Emits the last saved image
 function stopStreaming() {
