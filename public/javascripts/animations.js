@@ -24,7 +24,7 @@ $(function(){
   setTimeout(function(){
     $('#instructions').hide();
     $('#instruction-background').hide();
-  },1000)
+  },11000)
   /*
     binding event to certain 'gesture events'
     -on certain gestures, transition the page 
