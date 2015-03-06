@@ -7,7 +7,7 @@ var fs = require('fs');
 var twitter = require('./lib/twitter-api.js');
 var spawn = require('child_process').spawn;
 
-var IMAGE_FILE_PATH = './camera_images/image_stream.jpg'
+var IMAGE_FILE_PATH = '.public/camera_images/image_stream.jpg';
 
 var app = express();
 var server = require('http').Server(app);
@@ -17,6 +17,8 @@ var io = require('socket.io')(server);
 server.listen(app.get('port'));
 console.log('listening on', app.get('port'))
 
+var sockets = {};
+var proc;
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -24,9 +26,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname,'public')));
 app.use(express.static(path.join(__dirname,'camera_images')));
 app.use(express.static(path.join(__dirname,'bower_components')));
-
-var sockets = {};
-var proc;
 
 io.on('connection', function(socket) {
   sockets[socket.id] = socket;
@@ -70,12 +69,15 @@ function startStreaming(io) {
   var args = ["-f","-w", "640", "-h", "480", "-o", "->", IMAGE_FILE_PATH];
   proc = spawn('raspistill', args);
  
-  console.log('Watching for changes...');
  
+  console.log('Watching for changes...');
+
   app.set('watchingFile', true);
  
   fs.watchFile(IMAGE_FILE_PATH, function(current, previous) {
     io.sockets.emit('live-stream', 'image_stream.jpg?_t=' + (Date.now()));
   })
 };
+
+
 
