@@ -35,35 +35,28 @@ app.use(express.static(path.join(__dirname,'bower_components')));
 io.on('connection', function(socket) {
   sockets[socket.id] = socket;
   console.log(socket.id, "connected");
-  
+};  
   //post to twitter function
-  socket.on('post-to-twitter', function(err){
-     /*twitter.PostWithMedia method 
-       input of the function takes in  two variables: 
-         1. path to the image file 
-         2. message to post to twitter 
-       output:
-         error or success message 
-     */
-     twitter.PostWithMedia(IMAGE_FILE_PATH, 'BYTEME app posted @ ' + Date());
-  });
+socket.on('post-to-twitter', function(err){
+ twitter.PostWithMedia(IMAGE_FILE_PATH, 'BYTEME app posted @ ' + Date());
+});
 
-  io.on('disconnect', function() {
-    // remove this socket object from current on-line list
-    console.log("disconnected", socket.id);
-    delete sockets[socket.id];
-    //no more sockets, death to the stream!(power saving)
-    if (Object.keys(sockets).length == 0) {
-      app.set('watchingFile', false);
-      if (proc) proc.kill();
-      fs.unwatchFile(IMAGE_FILE_PATH);
-    }
-  });
+io.on('disconnect', function() {
+  // remove this socket object from current on-line list
+  console.log("disconnected", socket.id);
+  delete sockets[socket.id];
+  //no more sockets, death to the stream!(power saving)
+  if (Object.keys(sockets).length == 0) {
+    app.set('watchingFile', false);
+    if (proc) proc.kill();
+    fs.unwatchFile(IMAGE_FILE_PATH);
+  }
+});
 
-  io.on('start-stream', function() {
-    console.log('sexy-time')
-    startStreaming(io);
-  });
+io.on('start-stream', function() {
+  console.log('sexy-time')
+  startStreaming(io);
+});
 
 //if capturing already happening,will not re-init.Emits the last saved image
 function stopStreaming() {
@@ -91,7 +84,7 @@ function startStreaming(io) {
  
   fs.watchFile(IMAGE_FILE_PATH, function(current, previous) {
     io.sockets.emit('live-stream', 'image_stream.jpg?_t=' + (Date.now()));
-  })
+  });
 };
 
 
