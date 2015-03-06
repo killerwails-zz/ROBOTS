@@ -1,35 +1,36 @@
-
 <!DOCTYPE html>
 <html>
 
-<body>
- <header>
-    <p id="title"> Byte-Me</p>
-    <ul>
-    <li id="picture-gesture">picture gesture </li>
-    <li id="thumbs-up">thumbs up</li>
-    <li id="thumbs-down">thumbs down</li>
-    </ul>
-    <div class="clearboth"></div>
-    <link href="./stylesheets/style.css" type="text/css" rel="
-  stylesheet" />
-    <link href="http://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet" type="text/css">
+ <head>
+
+    <title>Byte-Me</title>
+    <link href="./stylesheets/style.css" type="text/css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;signed_in=true"></script>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
-    <!-- socket.io js file --> 
-    <!--<script src="/socket.io/socket.io.js"></script> -->
-    <script src="./javascripts/animations.js" />
-    
+    <script src="/socket.io/socket.io.js"></script> 
+    <script src="./javascripts/animations.js"></script>
+    <script type="text/javascript"></script>
+    <script src="bower_components/tracking/build/tracking-min.js"> </script>
+    <script src="/javascripts/byteme.js"></script>
     <script>
-      var socket = io('http://localhost:3000');
+      var socket = io('http://localhost:3001');
       socket.on('live-stream', function (data) {
       console.log(data);
-      // socket.emit('my other event', { my: 'data' });
+      });
+      $(function (){
+        $("#status").on('click', function(e){
+          e.preventDefault();
+          socket.emit('start-stream');
+        });
       });
     </script>
 
-  </header>
+  </head>
+
+<body>
+    
   <!-- this is for the counter-->
   <h1> </h1>
   <div id="instruction-background"></div>
@@ -46,6 +47,7 @@
   <p id='instruction-counter'></p>
   
   </div>
+  <canvas id="canvas"></canvas>
   <!-- background text-->
   <p id="greeting">Awaiting gestures...</p>
   <div id="twitter-pop-up">
@@ -56,20 +58,21 @@
   </div>
   <div id="status-box"></div>
   <div id="status"></div>
-<footer> 
 
-  <div class='panel-logo'>
-    <img src="./images/thumbs_down.png"/>
-  </div>
-  <div class='panel-logo'>
-    <img src="./images/picturesign.png"/>
-  </div>
-  <div class='panel-logo'>
-    <img src="./images/thumbs_up.png"/>
-  </div>
+  <footer> 
 
-</footer>
+    <div class='panel-logo'>
+      <img src="./images/thumbs_down.png"/>
+    </div>
+    <div class='panel-logo'>
+      <img src="./images/picturesign.png"/>
+    </div>
+    <div class='panel-logo'>
+      <img src="./images/thumbs_up.png"/>
+    </div>
+
+  </footer>
+
 </body>
-
-   
+ 
 </html>
