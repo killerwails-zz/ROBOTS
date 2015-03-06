@@ -202,7 +202,7 @@ h1.flash{
 
 #instructions{
   height:280px;
-  width:500px;
+  width:550px;
   border-radius:25px;
   position:absolute;
   z-index:2;
@@ -226,7 +226,7 @@ h1.flash{
 }
 
 #instruction-text{
-  font-size:20px;
+  font-size:15px;
   padding-left:20px;
   margin-right:10px;
   color:white;
