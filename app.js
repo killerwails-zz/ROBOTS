@@ -6,7 +6,6 @@ var path = require('path');
 var fs = require('fs');
 var spawn = require('child_process').spawn;
 var twitter = require('./lib/twitter-api.js');
-var io = require('socket.io').listen(3001);
 
 var IMAGE_FILE_PATH = './public/image_stream.jpg'
   
@@ -14,15 +13,17 @@ var app = express();
 var server = require('http').Server(app);
 
 app.set('port', process.env.PORT || 3000);
+var io = require('socket.io')(server);
+server.listen(app.get('port'));
+console.log('listening on', app.get('port'))
+
 
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname,'public')));
 app.use(express.static(path.join(__dirname,'bower_components')));
-app.listen(app.get('port'));
  
-app.listen(app.get('port'));
 
 var sockets = {};
 var proc;
@@ -44,6 +45,7 @@ io.on('connection', function(socket) {
   });
 
   io.on('start-stream', function() {
+    console.log('sexy-time')
     startStreaming(io);
   });
 
@@ -86,7 +88,4 @@ function startStreaming(io) {
     io.sockets.emit('live-stream', 'image_stream.jpg?_t=' + (Date.now()));
   })
 };
-
-
- 
 
