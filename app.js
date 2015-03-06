@@ -21,6 +21,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname,'public')));
 app.use(express.static(path.join(__dirname,'stream')));
 app.use(express.static(path.join(__dirname,'bower_components')));
+app.listen(app.get('port'));
  
 app.listen(app.get('port'));
 
