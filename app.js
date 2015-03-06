@@ -14,7 +14,10 @@ var server = require('http').Server(app);
 
 app.set('port', process.env.PORT || 3000);
 var io = require('socket.io')(server);
+
 server.listen(app.get('port'));
+
+
 console.log('listening on', app.get('port'))
 
 
@@ -28,9 +31,23 @@ app.use(express.static(path.join(__dirname,'bower_components')));
 var sockets = {};
 var proc;
 
+
+
 io.on('connection', function(socket) {
   sockets[socket.id] = socket;
   console.log(socket.id, "connected");
+  
+  //post to twitter function
+  socket.on('post-to-twitter', function(err){
+     /*twitter.PostWithMedia method 
+       input of the function takes in  two variables: 
+         1. path to the image file 
+         2. message to post to twitter 
+       output:
+         error or success message 
+     */
+     twitter.PostWithMedia('./images/robots.jpg', 'Cool!');
+  });
 
   io.on('disconnect', function() {
     // remove this socket object from current on-line list
@@ -59,7 +76,10 @@ io.on('connection', function(socket) {
       });
     });
   });
+
 });
+
+
 
 //if capturing already happening,will not re-init.Emits the last saved image
 function stopStreaming() {
