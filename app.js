@@ -8,7 +8,7 @@ var spawn = require('child_process').spawn;
 var twitter = require('./lib/twitter-api.js');
 var io = require('socket.io').listen(3001);
 
-var IMAGE_FILE_PATH = './public/image_stream.jpg'
+var IMAGE_FILE_PATH = './camera_images/image_stream.jpg'
   
 var app = express();
 var server = require('http').Server(app);
@@ -49,7 +49,7 @@ io.on('connection', function(socket) {
 
   io.on('take-picture',function() {
     fs.open(IMAGE_FILE_PATH, 'r', function(err,reader){
-      fs.open("./public/image_capture.jpg",'w+',function(err,writer){
+      fs.open("./camera_images/image_capture.jpg",'w+',function(err,writer){
         console.log(err)
         fs.write(writer, reader.toBuffer, function(err,fd){
           console.log('matt: ', err)
