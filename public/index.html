@@ -15,11 +15,14 @@
     <script src="bower_components/tracking/build/tracking-min.js"> </script>
     <script src="/javascripts/byteme.js"></script>
     <script>
+      var IMAGE_ELEMENT 
       var socket = io('http://localhost:3001');
       socket.on('live-stream', function (data) {
       console.log(data);
+      IMAGE_ELEMENT.attr('src',data)
       });
       $(function (){
+        IMAGE_ELEMENT = $('#matt');
         $("#status").on('click', function(e){
           e.preventDefault();
           socket.emit('start-stream');
@@ -47,6 +50,7 @@
   <p id='instruction-counter'></p>
   
   </div>
+  <img id="matt" src=""/>
   <canvas id="canvas"></canvas>
   <!-- background text-->
   <p id="greeting">Awaiting gestures...</p>
