@@ -14,16 +14,18 @@
     <script src="/javascripts/byteme.js"></script>
     <script>
       var IMAGE_ELEMENT 
-      var socket = io('http://localhost:3001');
+      var socket = io('http://localhost:3000');
       socket.on('live-stream', function (data) {
       console.log(data);
       IMAGE_ELEMENT.attr('src',data)
       });
       $(function (){
         IMAGE_ELEMENT = $('#matt');
+console.log('hello')
         $("#status").on('click', function(e){
+console.log('hello')
           e.preventDefault();
-          socket.emit('start-stream');
+          console.log(socket.emit('start-stream'));
         });
       });
     </script>
