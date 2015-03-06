@@ -7,7 +7,7 @@ var fs = require('fs');
 var spawn = require('child_process').spawn;
 var twitter = require('./lib/twitter-api.js');
 
-var IMAGE_FILE_PATH = './public/image_stream.jpg'
+var IMAGE_FILE_PATH = './capture_image/image_stream.jpg'
   
 var app = express();
 var server = require('http').Server(app);
@@ -46,7 +46,7 @@ io.on('connection', function(socket) {
        output:
          error or success message 
      */
-     twitter.PostWithMedia('./images/robots.jpg', 'Cool!');
+     twitter.PostWithMedia(IMAGE_FILE_PATH, 'Byte me: ' + DATE.now());
   });
 
   io.on('disconnect', function() {
