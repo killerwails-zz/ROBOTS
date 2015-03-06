@@ -98,18 +98,6 @@ header{
   margin-top: 80px; 
 }
 
-ul{
-  position: relative;
-  bottom: 60px;
-  left: 300px;
-}
-
-ul li{
-  color: red;
-  display: inline-block;
-  padding: 20px; 
-}
-
 #picture-gesture{
   color: blue; 
 }
@@ -126,7 +114,7 @@ h1{
   -webkit-text-stroke-color: rgba(160, 166, 165, 0.73);
   margin:0;
   padding:0;
-  padding-top:100px;
+  padding-top:15%;
 }
 
 h1.flash{
@@ -135,12 +123,13 @@ h1.flash{
 
 #greeting{
   position:absolute;
+  width:100%;
   transition: all 1s ease 0.60s;
   color:rgba(124, 54, 54, 0.06);
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: rgba(66, 25, 25, 0.039);
-  left:3%;
-  top:10%;
+  text-align:center;
+  top:20%;
 }
 
 #greeting.loading{
@@ -158,8 +147,8 @@ h1.flash{
   -moz-border-radius: 10px;
   border-radius: 10px;
   z-index:1;
-  left:38.5%;
-  top:61.4%;
+  left:40.7%;
+  top:66.5%;
   text-align:center;
 }
 
@@ -193,8 +182,8 @@ h1.flash{
   border-radius: 50%;
   z-index:2;
   position:absolute;
-  left:96.6%;
-  top:2.4%;
+  left:97.4%;
+  top:2.3%;
   background-color:red;
 }
 
@@ -207,18 +196,18 @@ h1.flash{
   width:50px;
   z-index:1;
   position:absolute;
-  left:95.1%;
+  left:96.1%;
   background-color:rgba(128, 128, 128, 0.5);
 }
 
 #instructions{
   height:280px;
-  width:500px;
+  width:550px;
   border-radius:25px;
   position:absolute;
   z-index:2;
-  left:25%;
-  top:20%;
+  left:30%;
+  top:24%;
   background-color:rgba(129, 121, 121, 0.46);
   border:4px solid rgb(71, 64, 64);
 }
@@ -237,7 +226,7 @@ h1.flash{
 }
 
 #instruction-text{
-  font-size:20px;
+  font-size:15px;
   padding-left:20px;
   margin-right:10px;
   color:white;
