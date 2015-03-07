@@ -35,9 +35,9 @@ app.use(express.static(path.join(__dirname,'bower_components')));
 io.on('connection', function(socket) {
   sockets[socket.id] = socket;
   console.log(socket.id, "connected");
-};  
+});  
   //post to twitter function
-socket.on('post-to-twitter', function(err){
+io.on('post-to-twitter', function(err){
  twitter.PostWithMedia(IMAGE_FILE_PATH, 'BYTEME app posted @ ' + Date());
 });
 
@@ -84,7 +84,7 @@ function startStreaming(io) {
  
   fs.watchFile(IMAGE_FILE_PATH, function(current, previous) {
     io.sockets.emit('live-stream', 'image_stream.jpg?_t=' + (Date.now()));
-  });
+  })
 };
 
 
