@@ -7,7 +7,7 @@ var fs = require('fs');
 var twitter = require('./lib/twitter-api.js');
 var spawn = require('child_process').spawn;
 
-var IMAGE_FILE_PATH = '.public/images/image_stream.jpg';
+var IMAGE_FILE_PATH = '/public/images/image_stream.jpg';
 
 var app = express();
 var server = require('http').Server(app);
