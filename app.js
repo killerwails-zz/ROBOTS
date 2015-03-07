@@ -7,7 +7,7 @@ var fs = require('fs');
 var twitter = require('./lib/twitter-api.js');
 var spawn = require('child_process').spawn;
 
-var IMAGE_FILE_PATH = '.public/camera_images/image_stream.jpg';
+var IMAGE_FILE_PATH = '.public/images/image_stream.jpg';
 
 var app = express();
 var server = require('http').Server(app);
@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname,'public')));
-app.use(express.static(path.join(__dirname,'camera_images')));
+app.use(express.static(path.join(__dirname,'public/images')));
 app.use(express.static(path.join(__dirname,'bower_components')));
 
 
